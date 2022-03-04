@@ -109,12 +109,17 @@
         </div>
 
         <div class="col-md-2">
-          <input type="text" class="form-control" placeholder="Dia" id="dia" />
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Dia"
+            id="dia"
+          />
         </div>
 
         <div class="col-md-6">
           <select class="form-control" id="tipo">
-            <option>Tipo</option>
+            <option value="">Tipo</option>
             <option value="1">Alimentação</option>
             <option value="2">Educação</option>
             <option value="3">Lazer</option>
@@ -136,15 +141,22 @@
 
         <div class="col-md-2">
           <input
-            type="text"
+            type="number"
             class="form-control"
             placeholder="Valor"
             id="valor"
           />
         </div>
+        <div class="col-md-2">
+          <input type="checkbox" class="form-control" onchange="black()" />
+        </div>
 
         <div class="col-md-2 d-flex justify-content-end">
-          <button type="button" class="btn btn-primary">
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="handleListBudgetSearch()"
+          >
             <i class="fas fa-search"></i>
           </button>
         </div>
