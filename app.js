@@ -65,16 +65,27 @@ class Bd {
     let despesasFiltradas = Array();
     despesasFiltradas = this.handleListRecover();
 
-    console.log(despesasFiltradas);
-
     if (despesa.ano != "") {
       despesasFiltradas = despesasFiltradas.filter((x) => x.ano == despesa.ano);
     }
     if (despesa.mes != "") {
       despesasFiltradas = despesasFiltradas.filter((x) => x.mes == despesa.mes);
     }
+    if (despesa.dia != "") {
+      despesasFiltradas = despesasFiltradas.filter((x) => x.dia == despesa.dia);
+    }
+    if (despesa.tipo != "") {
+      despesasFiltradas = despesasFiltradas.filter(
+        (x) => x.tipo == despesa.tipo
+      );
+    }
+    if (despesa.desc != "") {
+      despesasFiltradas = despesasFiltradas.filter(
+        (x) => x.desc == despesa.desc
+      );
+    }
 
-    console.log(despesasFiltradas);
+    return despesasFiltradas;
   }
 }
 
@@ -111,7 +122,6 @@ function handleNewBudget() {
       "Despesa cadastrada com sucesso!";
 
     $("#modalRegister").modal("show");
-
     ano.value = "";
     mes.value = "";
     dia.value = "";
@@ -137,8 +147,6 @@ function handleListBudget() {
   let listBudget = document.getElementById("listBudget");
 
   despesas.forEach(function (x) {
-    console.log(x);
-
     let row = listBudget.insertRow();
 
     row.insertCell(0).innerHTML = ` ${x.dia}/${x.mes}/${x.ano} `;
@@ -177,7 +185,36 @@ function handleListBudgetSearch() {
 
   let despesa = new Budget(ano, mes, dia, tipo, desc, valor);
 
-  bd.search(despesa);
-}
+  let despesas = bd.search(despesa);
 
-function black() {}
+  let listBudget = document.getElementById("listBudget");
+  listBudget.innerHTML = "";
+
+  despesas.forEach(function (x) {
+    let row = listBudget.insertRow();
+
+    row.insertCell(0).innerHTML = ` ${x.dia}/${x.mes}/${x.ano} `;
+
+    switch (x.tipo) {
+      case "1":
+        x.tipo = "Alimentação";
+        break;
+      case "2":
+        x.tipo = "Educação";
+        break;
+      case "3":
+        x.tipo = "Lazer";
+        break;
+      case "4":
+        x.tipo = "Saúde";
+        break;
+      case "5":
+        x.tipo = "Transporte";
+        break;
+    }
+    row.insertCell(1).innerHTML = x.tipo;
+
+    row.insertCell(2).innerHTML = x.desc;
+    row.insertCell(3).innerHTML = x.valor;
+  });
+}
